@@ -1,0 +1,22 @@
+public class Lancero extends Soldado {
+    private double longitudLanza;
+
+    public Lancero(String nombre, int puntosVida, int fila, int columna, double longitudLanza) {
+        super(nombre, puntosVida, fila, columna);
+        this.longitudLanza = longitudLanza;
+    }
+
+    public void schiltrom() {
+        System.out.println(nombre + " forma una falange aumentando su defensa.");
+    }
+
+    @Override
+    public void mostrarAccion() {
+        schiltrom();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + String.format(", Longitud de Lanza: %.2f", longitudLanza);
+    }
+}
