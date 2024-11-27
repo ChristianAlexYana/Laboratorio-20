@@ -62,3 +62,21 @@ class Caballero extends Soldado {
         return super.toString() + ", Arma: " + armaActual + ", Montado: " + montado;
     }
 }
+class Ejercito {
+    private Soldado[] soldados;
+    private int numeroSoldados;
+    private String nombreEjercito;
+    private String[][] tablero;
+    public Ejercito(String nombreEjercito, String[][] tablero) {
+        this.nombreEjercito = nombreEjercito;
+        this.soldados = new Soldado[10];
+        this.numeroSoldados = 0;
+        this.tablero = tablero;
+    }
+    public Soldado[] getSoldados() {
+        return soldados;
+    }
+    public String getNombreEjercito() {
+        return nombreEjercito;
+    }
+}
