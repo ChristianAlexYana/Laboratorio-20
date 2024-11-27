@@ -62,3 +62,79 @@ class Caballero extends Soldado {
         return super.toString() + ", Arma: " + armaActual + ", Montado: " + montado;
     }
 }
+class Lancero extends Soldado {
+    private int longitudLanza;
+    public Lancero(String nombre, int puntosVida, int fila, int colummna, int longitudLanza){
+        super(nombre, puntosVida, fila, colummna);
+        this.longitudLanza = longitudLanza;
+    }
+    @Override
+    public String toString(){
+        return super.toString()+ ", Longitud de Lanza: "+ longitudLanza;
+    }
+}
+class Ejercito {
+    private Soldado[] soldados;
+    private int numeroSoldados;
+    private String nombreEjercito;
+    private String[][] tablero;
+    public Ejercito(String nombreEjercito, String[][] tablero) {
+        this.nombreEjercito = nombreEjercito;
+        this.soldados = new Soldado[10];
+        this.numeroSoldados = 0;
+        this.tablero = tablero;
+    }
+    public void crearSoldado(int tipoSoldado, int i) {
+        Random rand = new Random();
+        String nombre = "";
+        int vida = 0, fila = rand.nextInt(10), columna = rand.nextInt(10);
+        switch (tipoSoldado) {
+            case 0://espadachin
+                nombre = "E" + i + "X" + (nombreEjercito.equals("Ejército 1") ? "1" : "2");  //formato: E4X1
+                vida = rand.nextInt(2) + 3;
+                agregarSoldado(new Espadachin(nombre, vida, fila, columna, rand.nextInt(3) + 2));
+                break;
+            case 1:  //arquero
+                nombre = "A" + i + "X" + (nombreEjercito.equals("Ejército 1") ? "1" : "2");  //formato: A8X2
+                vida = rand.nextInt(3) + 1;
+                agregarSoldado(new Arquero(nombre, vida, fila, columna, rand.nextInt(10) + 5));
+                break;
+            case 2:     //caballero
+                nombre = "C" + i + "X" + (nombreEjercito.equals("Ejército 1") ? "1" : "2");  //formato: C1X1
+                vida = rand.nextInt(3) + 3;
+                agregarSoldado(new Caballero(nombre, vida, fila, columna));
+                break;
+            case 3: //lancero
+                nombre = "L" + i + "X" + (nombreEjercito.equals("Ejército 1") ? "1" : "2");  //formato: L1X2
+                vida = rand.nextInt(2) + 1;
+                agregarSoldado(new Lancero(nombre, vida, fila, columna,rand.nextInt(2)+1));
+                break;
+        }
+    }
+    public void agregarSoldado(Soldado soldado) {
+        if (numeroSoldados < 10) {
+            soldados[numeroSoldados] = soldado;
+            numeroSoldados++;
+            tablero[soldado.getFila()][soldado.getColumna()] = soldado.getNombre(); //agregra nombre ne la posicion
+        }
+    }
+    public void ordenarPorPoder() {    //burbuja
+        for (int i = 0; i < numeroSoldados - 1; i++) {
+            for (int j = i + 1; j < numeroSoldados; j++) {
+                if (soldados[i].getPuntosVida() < soldados[j].getPuntosVida()) {
+                    Soldado temp = soldados[i];
+                    soldados[i] = soldados[j];
+                    soldados[j] = temp;
+                }
+            }
+        }
+    }
+    public Soldado[] getSoldados() {
+        return soldados;
+    }
+    public String getNombreEjercito() {
+        return nombreEjercito;
+    }
+}
+
+
