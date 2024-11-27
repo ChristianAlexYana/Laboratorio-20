@@ -72,6 +72,7 @@ class Ejercito {
         this.soldados = new Soldado[10];
         this.numeroSoldados = 0;
         this.tablero = tablero;
+<<<<<<< HEAD
         }
     public void crearSoldado(int tipoSoldado, int i) {
         Random rand = new Random();
@@ -113,6 +114,8 @@ class Ejercito {
             }
         }
     
+=======
+>>>>>>> c7f9d16d6138bed1a1bb8865f6f1d7906d184159
     }
     public Soldado[] getSoldados() {
         return soldados;
@@ -120,4 +123,8 @@ class Ejercito {
     public String getNombreEjercito() {
         return nombreEjercito;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c7f9d16d6138bed1a1bb8865f6f1d7906d184159
