@@ -137,4 +137,100 @@ class Ejercito {
     }
 }
 
-
+public class VideoJuego {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random rand = new Random();
+        boolean seguirJugando = true;
+        while (seguirJugando) {
+            String[][] tablero = new String[10][10];
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    tablero[i][j] = "____";
+                }
+            }
+            Ejercito ejercito1 = new Ejercito("Ejército 1", tablero);
+            Ejercito ejercito2 = new Ejercito("Ejército 2", tablero);
+            for (int i = 0; i < rand.nextInt(10) + 1; i++) {   //crea ejercito 1
+                int tipoSoldado = rand.nextInt(4);
+                ejercito1.crearSoldado(tipoSoldado, i);
+            }
+            for (int i = 0; i < rand.nextInt(10) + 1; i++) { //crea ejercito 2
+                int tipoSoldado = rand.nextInt(4);
+                ejercito2.crearSoldado(tipoSoldado, i);
+            }
+            System.out.println("Tablero combinado de ambos Ejércitos (10x10):");
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    System.out.print(tablero[i][j] + "|");
+                }
+                System.out.println();
+            }
+            System.out.println("\nSoldados del " + ejercito1.getNombreEjercito() + ":");//info ejercito1
+            for (Soldado soldado : ejercito1.getSoldados()) {
+                if (soldado != null) {
+                    System.out.println(soldado);
+                }
+            }
+            System.out.println("\nSoldados del " + ejercito2.getNombreEjercito() + ":"); //info ejercito 2
+            for (Soldado soldado : ejercito2.getSoldados()) {
+                if (soldado != null) {
+                    System.out.println(soldado);
+                }
+            }
+            Soldado mayorVidaEj1 = ejercito1.getSoldados()[0];
+            Soldado mayorVidaEj2 = ejercito2.getSoldados()[0];
+            for (Soldado soldado : ejercito1.getSoldados()) {
+                if (soldado != null && soldado.getPuntosVida() > mayorVidaEj1.getPuntosVida()) {//mayor vida sold por ejercito
+                    mayorVidaEj1 = soldado;
+                }
+            }
+            for (Soldado soldado : ejercito2.getSoldados()) {
+                if (soldado != null && soldado.getPuntosVida() > mayorVidaEj2.getPuntosVida()) {//mayor vida soldado por ejercito
+                    mayorVidaEj2 = soldado;
+                }
+            }
+            System.out.println("\nSoldado con mayor vida en el Ejército 1: " + mayorVidaEj1);
+            System.out.println("Soldado con mayor vida en el Ejército 2: " + mayorVidaEj2);
+            System.out.println("\nPromedio de vida del Ejército 1: " + calcularPromedioVida(ejercito1));
+            System.out.println("Promedio de vida del Ejército 2: " + calcularPromedioVida(ejercito2));
+            System.out.println("\nRanking de poder del Ejército 1:");
+            ejercito1.ordenarPorPoder(); //burbuja
+            for (Soldado soldado : ejercito1.getSoldados()) {
+                if (soldado != null) {
+                    System.out.println(soldado);
+                }
+            }
+            System.out.println("\nRanking de poder del Ejército 2:");
+            ejercito2.ordenarPorPoder();     //burbuja
+            for (Soldado soldado : ejercito2.getSoldados()) {
+                if (soldado != null) {
+                    System.out.println(soldado);
+                }
+            }
+            if (calcularPromedioVida(ejercito1) > calcularPromedioVida(ejercito2)) {
+                System.out.println("\nEl Ejército 1 ganará la batalla.");
+            } else if (calcularPromedioVida(ejercito1) < calcularPromedioVida(ejercito2)) {
+                System.out.println("\nEl Ejército 2 ganará la batalla.");
+            } else {
+                System.out.println("\nEs un empate.");
+            }
+            System.out.print("\n¿Deseas jugar otra vez? (s/n): ");
+            String respuesta = scanner.next();
+            if (respuesta.equalsIgnoreCase("n")) {
+                seguirJugando = false;
+            }
+        }
+    }
+    public static double calcularPromedioVida(Ejercito ejercito) {
+        int totalVida = 0;
+        int totalSoldados = 0;
+        for (Soldado soldado : ejercito.getSoldados()) {
+            if (soldado != null) {
+                totalVida += soldado.getPuntosVida();
+                totalSoldados++;
+            }
+        }
+        return totalSoldados > 0 ? (double) totalVida / totalSoldados : 0;
+    }
+}
