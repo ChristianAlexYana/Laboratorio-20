@@ -72,7 +72,8 @@ class Ejercito {
         this.soldados = new Soldado[10];
         this.numeroSoldados = 0;
         this.tablero = tablero;
-        public void crearSoldado(int tipoSoldado, int i) {
+        }
+    public void crearSoldado(int tipoSoldado, int i) {
         Random rand = new Random();
         String nombre = "";
         int vida = 0, fila = rand.nextInt(10), columna = rand.nextInt(10);
